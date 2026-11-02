@@ -365,7 +365,7 @@ const T={
   board:'رحلات من الرياض',now:'الآن في الرياض',hDest:'الوجهة',hCode:'الرمز',hDur:'المدة',hFrom:'السعر من',hStat:'الحالة',open:'متاح للحجز',
   chip1:'رحلة غروب على البوسفور',chip2:'فيلا فوق الماء',
   svcK:'SERVICES',svcT:'كل ما تحتاجه رحلتك',svcP:'من التذكرة إلى رخصة القيادة الدولية، نرتب التفاصيل كلها عنك.',
-  pkgK:'PACKAGES',pkgT:'باقات جاهزة للسفر',pkgP:'الأسعار للشخص الواحد ما لم يُذكر غير ذلك. افتح الباقة لتفاصيلها كاملة.',all:'الكل',
+  pkgK:'PACKAGES',pkgT:'باقات جاهزة للسفر',pkgP:'افتح الباقة لتفاصيلها كاملة، واطلب عرض السعر عبر واتساب.',askQuote:'اطلب عرض سعر مخصص لتواريخك وعدد المسافرين.',all:'الكل',
   days:(d,n)=>`${d} أيام / ${n} ليالٍ`,from:'يبدأ من',
   offK:'OFFERS',offT:'عروض بوقت محدود',offP:'انسخ الرمز واذكره عند الحجز معنا عبر واتساب.',code:'رمز العرض',until:'ساري حتى',noCode:'بدون رمز',always:'حسب التوفر',viewPkg:'عرض الباقة',
   stepK:'HOW IT WORKS',stepT:'ثلاث خطوات وتسافر',
@@ -382,7 +382,7 @@ const T={
   board:'Departures from Riyadh',now:'Riyadh now',hDest:'Destination',hCode:'Code',hDur:'Duration',hFrom:'From',hStat:'Status',open:'Open for booking',
   chip1:'Bosphorus sunset cruise',chip2:'Overwater villa',
   svcK:'SERVICES',svcT:'Everything your trip needs',svcP:'From the ticket to the international driving licence, we handle the details for you.',
-  pkgK:'PACKAGES',pkgT:'Ready-to-go packages',pkgP:'Prices are per person unless a card says otherwise. Open a package for the full details.',all:'All',
+  pkgK:'PACKAGES',pkgT:'Ready-to-go packages',pkgP:'Open a package for the full details, and ask us for a quote on WhatsApp.',askQuote:'Ask for a quote tailored to your dates and group size.',all:'All',
   days:(d,n)=>`${d} days / ${n} nights`,from:'From',
   offK:'OFFERS',offT:'Limited-time offers',offP:'Copy the code and mention it when you book with us on WhatsApp.',code:'Promo code',until:'Valid until',noCode:'No code needed',always:'Subject to availability',viewPkg:'View package',
   stepK:'HOW IT WORKS',stepT:'Three steps to take off',
@@ -533,7 +533,7 @@ function render(){
  </div>
  <div class="wrap">
   <div class="dests">
-   ${pk.map(p=>{const d=L(p,'destination').split(/[،,]\s*/);return `<button class="dest-card" type="button" data-pkg="${p.id}">${poster(p.code,p.id+'d')}<div class="dc-top"><span class="dc-code">RUH → ${esc(p.code)}</span><span class="dc-days">${t('days')(p.days,p.nights)}</span></div><div class="dc-body"><span class="dc-country">${esc(d[1]||'')}</span><h3>${esc(d[0])}</h3><div class="dc-price"><span>${t('from')} <b>${num(p.price)}</b> ${t('cur')}</span><span class="dc-go">${I.arrow}</span></div></div></button>`;}).join('')}
+   ${pk.map(p=>{const d=L(p,'destination').split(/[،,]\s*/);return `<button class="dest-card" type="button" data-pkg="${p.id}">${poster(p.code,p.id+'d')}<div class="dc-top"><span class="dc-code">RUH → ${esc(p.code)}</span><span class="dc-days">${t('days')(p.days,p.nights)}</span></div><div class="dc-body"><span class="dc-country">${esc(d[1]||'')}</span><h3>${esc(d[0])}</h3><div class="dc-price"><span>${t('viewPkg')}</span><span class="dc-go">${I.arrow}</span></div></div></button>`;}).join('')}
    </div>
  </div>
 
@@ -608,7 +608,7 @@ function renderPkgs(){
   <div class="art">${poster(p.code,p.id)}<span class="code">RUH → ${esc(p.code)}</span><span class="cat">${esc(L(p,'category'))}</span></div>
   <div class="body"><div class="meta"><span>${I.pin}${esc(L(p,'destination'))}</span><span>${I.cal}${t('days')(p.days,p.nights)}</span></div>
   <h3>${esc(L(p,'title'))}</h3><p>${esc(L(p,'summary'))}</p>
-  <div class="foot"><div class="price"><small>${t('from')}</small><b>${num(p.price)}<em>${t('cur')}</em></b><small>${esc(L(p,'priceNote'))}</small></div><span class="arrow">${I.arrow}</span></div></div></button>`).join('');
+  <div class="foot"><span style="font-family:var(--display);font-weight:600;font-size:15px">${t('viewPkg')}</span><span class="arrow">${I.arrow}</span></div></div></button>`).join('');
  document.querySelectorAll('.filters button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.cat===cat));
 }
 
@@ -624,7 +624,7 @@ function openPkg(id){
   <h2>${esc(L(p,'title'))}</h2><p class="lead">${esc(L(p,'summary'))}</p>
   <div class="cols">${hl&&hl.length?`<div class="box" style="--c:var(--sun)"><h4>${t('highlights')}</h4><ul>${hl.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}${inc&&inc.length?`<div class="box" style="--c:var(--indigo)"><h4>${t('includes')}</h4><ul>${inc.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}</div>
   <div class="md">${md(L(p,'details'))}</div>
-  <div class="bar"><div class="price"><small>${t('from')}</small><b>${num(p.price)}<em>${t('cur')}</em></b><small>${esc(L(p,'priceNote'))}</small></div><a class="btn btn-coral" target="_blank" rel="noopener" href="${wa(t('waPkg')(L(p,'title')))}">${I.wa} ${t('book')}</a></div>
+  <div class="bar"><span style="color:var(--muted)">${t('askQuote')}</span><a class="btn btn-coral" target="_blank" rel="noopener" href="${wa(t('waPkg')(L(p,'title')))}">${I.wa} ${t('book')}</a></div>
  </div>`);
 }
 function openPost(id){
