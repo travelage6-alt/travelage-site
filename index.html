@@ -178,6 +178,11 @@ html[dir=rtl] .dest-card .dc-go svg{transform:scaleX(-1)}
 .dest-card:hover .dc-go svg{transform:none}
 html[dir=rtl] .dest-card:hover .dc-go svg{transform:scaleX(-1)}
 
+.art{position:relative}
+.art img.ph,.dest-card img.ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.2,.8,.2,1)}
+.dest-card img.ph{z-index:-2}
+.pkg:hover .art img.ph,.dest-card:hover img.ph,.post:hover .art img.ph{transform:scale(1.05)}
+
 /* ---------- sections ---------- */
 section{padding-block:clamp(64px,8vw,112px)}
 .sec-head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:clamp(28px,4vw,48px);flex-wrap:wrap}
@@ -543,7 +548,8 @@ function poster(code,id){
   <path d="M40 200c80-60 220-80 330-30" stroke="#fff" stroke-width="3" fill="none" stroke-dasharray="4 10" stroke-linecap="round"/>`
  };
  const k=P[code]?code:'GEN';
- return `<svg viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${P[k]}</svg>`;
+ const ph={IST:'/dest-ist.jpg',MLE:'/dest-mle.jpg',TBS:'/dest-tbs.jpg',CAI:'/dest-cai.jpg'}[code];
+ return `<svg viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${P[k]}</svg>`+(ph?`<img class="ph" src="${ph}" alt="" loading="lazy" onerror="this.remove()">`:'');
 }
 const imgCode={};D.packages.forEach(p=>imgCode[p.image]=p.code);
 const postArt=p=>poster(imgCode[p.image]||'GEN',p.id);
