@@ -252,6 +252,30 @@ html[dir=rtl] .pass .stub .route{justify-content:flex-end}
 .barcode{height:34px;background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 4px,var(--ink) 4px 5px,transparent 5px 9px,var(--ink) 9px 12px,transparent 12px 14px);opacity:.85;border-radius:2px;margin-top:4px}
 .pass .link{font-family:var(--display);font-size:14px;font-weight:600;color:var(--indigo);background:none;border:0;padding:0;text-align:start;text-decoration:underline;text-underline-offset:4px}
 
+/* intercity transfers */
+.tr-feats{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px}
+.tr-feat{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);font-family:var(--display);font-size:14px;font-weight:500}
+.tr-feat i{width:10px;height:10px;border-radius:3px;transform:rotate(45deg)}
+.tr-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:22px;align-items:start}
+.tr-card{background:#fff;color:var(--ink);border-radius:var(--r);overflow:hidden;border-top:6px solid var(--c);display:flex;flex-direction:column}
+.tr-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:24px 26px 18px;border-bottom:2px dashed var(--line)}
+.tr-top small{display:block;font-size:12px;color:var(--muted);font-family:var(--display)}
+.tr-top h3{font-size:28px;font-weight:800;margin:2px 0}
+.tr-top span{font-size:14px;color:var(--muted)}
+.tr-top .tr-from{font-family:var(--display);font-size:13px;font-weight:600;background:var(--paper);color:var(--ink);padding:6px 12px;border-radius:999px;white-space:nowrap}
+.tr-rows{list-style:none;margin:0;padding:8px 26px}
+.tr-rows li{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.tr-rows li:last-child{border-bottom:0}
+.tr-city{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:600;font-size:17px}
+.tr-city b{font-family:var(--mono);font-size:12px;color:var(--muted);font-weight:700}
+.tr-city i{width:28px;border-top:2px dashed var(--c)}
+.tr-price{font-family:var(--display);font-weight:800;font-size:22px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tr-price em{font-style:normal;font-size:13px;font-weight:500;color:var(--muted)}
+.tr-btn{margin:6px 26px 26px;justify-content:center}
+.tr-note{margin:22px 0 0;color:rgba(255,255,255,.7);font-size:15px;display:flex;align-items:center;gap:10px}
+.tr-note::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--sun);transform:rotate(45deg)}
+@media (max-width:860px){.tr-grid{grid-template-columns:1fr}}
+
 /* steps */
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,3vw,40px);counter-reset:s;position:relative}
 .step{position:relative;padding-top:78px}
@@ -631,15 +655,15 @@ function render(){
  </div></section>
 
  <section id="offers" class="offers-sec"><div class="wrap">
-  <div class="sec-head"><div><span class="kicker">03 / ${t('offK')}</span><h2>${t('offT')}</h2><p>${t('offP')}</p></div></div>
-  <div class="offers">${vis(D.offers).map((o,i)=>{const p=D.packages.find(x=>x.id===o.packageId);const c=['var(--coral)','var(--indigo)','#C48A00'][i%3];
-   return `<article class="pass" style="--c:${c}"><div class="stub"><div class="badge">${esc(L(o,'badge'))}</div><div class="route"><span>RUH</span><i></i>${I.plane.replace('<svg','<svg width="16" height="16" style="transform:rotate(90deg)"')}<i></i><span>${esc(p?p.code:'')}</span></div><div class="perf"></div></div>
-   <div class="main"><h3>${esc(L(o,'title'))}</h3><p>${esc(L(o,'blurb'))}</p>
-   <div class="fields"><div><small>${t('until')}</small><b>${o.validUntil?fmtDate(o.validUntil):t('always')}</b></div>
-   ${o.code?`<div><small>${t('code')}</small><button class="copy" type="button" data-copy="${esc(o.code)}">${esc(o.code)} ${I.copy}</button></div>`:`<div><small>${t('code')}</small><b style="font-family:var(--display);font-size:14px">${t('noCode')}</b></div>`}</div>
-   <div class="barcode" aria-hidden="true"></div>
-   <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap">${p?`<button class="link" type="button" data-pkg="${p.id}">${t('viewPkg')}</button>`:'<span></span>'}<a class="btn btn-ink" style="padding:9px 16px;font-size:14px" target="_blank" rel="noopener" href="${wa(t('waOffer')(L(o,'title'),o.code))}">${I.wa} ${t('wa')}</a></div>
-   </div></article>`;}).join('')}</div>
+  <div class="sec-head"><div><span class="kicker">03 / ${ar()?'INTERCITY':'INTERCITY'}</span><h2>${ar()?'مشوارك بين المدن.. علينا':'Your intercity trip, on us'}</h2><p>${ar()?'توصيل خاص من الرياض إلى مدن المملكة والخليج، رحلة باتجاه واحد بسائق محترف.':'Private one-way transfers from Riyadh to cities across Saudi Arabia and the Gulf, with a professional driver.'}</p></div></div>
+  <div class="tr-feats">${(ar()?['سيارات بمختلف الفئات','سائقون محترفون','نظام تتبع آمن للرحلات','الرحلات One Way']:['Cars in every class','Professional drivers','Safe trip tracking','One-way trips']).map((f,i)=>`<span class="tr-feat"><i style="background:${['var(--coral)','var(--sun)','#7C77C9','#fff'][i]}"></i>${f}</span>`).join('')}</div>
+  <div class="tr-grid">${[
+   {car:ar()?'فورد توريس':'Ford Taurus',cls:ar()?'سيدان عائلية':'Family sedan',c:'var(--sun)',rows:[['القصيم','Qassim',1000],['الدمام','Dammam',1000],['مكة المكرمة','Makkah',1800],['جدة','Jeddah',1800],['المدينة المنورة','Madinah',1800]]},
+   {car:ar()?'لكزس':'Lexus',cls:ar()?'فئة فاخرة':'Luxury class',c:'var(--coral)',rows:[['الدوحة','Doha',1900],['دبي','Dubai',2800],['البحرين','Bahrain',1800]]}
+  ].map(g=>`<article class="tr-card" style="--c:${g.c}"><div class="tr-top"><div><small>${ar()?'نوع السيارة':'Car'}</small><h3>${g.car}</h3><span>${g.cls}</span></div><span class="tr-from">${ar()?'من الرياض':'From Riyadh'}</span></div>
+   <ul class="tr-rows">${g.rows.map(r=>`<li><span class="tr-city"><b>RUH</b><i></i>${ar()?r[0]:r[1]}</span><span class="tr-price">${num(r[2])} <em>${t('cur')}</em></span></li>`).join('')}</ul>
+   <a class="btn btn-ink tr-btn" target="_blank" rel="noopener" href="${wa(ar()?`مرحباً، أرغب في حجز مشوار بين المدن بسيارة ${g.car}.`:`Hello, I would like to book an intercity trip by ${g.car}.`)}">${I.wa} ${ar()?'احجز مشوارك':'Book your trip'}</a></article>`).join('')}</div>
+  <p class="tr-note">${ar()?'السعر شامل الوقود والرسوم. الأسعار لرحلة باتجاه واحد.':'Prices include fuel and fees. One-way trip prices.'}</p>
  </div></section>
 
  <section id="how"><div class="wrap">
