@@ -1,6 +1,6 @@
 # Travelage | عصر السفر
 
-> Travelage (عصر السفر) is a licensed travel and tourism agency in Riyadh, Saudi Arabia. It plans trips end to end: flights, hotels, transfers, tours, cruises, visas and local experiences, for individuals and families.
+> Travelage (عصر السفر) is a licensed travel and tourism agency in Riyadh, Saudi Arabia. It plans trips end to end: flights, hotels, transfers, tours, cruises and local experiences, for individuals and families.
 
 Legal name: مؤسسة عصر السفر للسفر والسياحة
 Licence: Travel & tourism agency, licence no. 73106067
@@ -14,7 +14,6 @@ Languages: Arabic, English
 - Hotel bookings
 - Tour packages and holiday programmes
 - Cruises
-- Visa assistance
 - Airport transfers and local experiences
 
 ## Contact
